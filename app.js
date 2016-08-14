@@ -4,25 +4,19 @@ var app = express();
 
 app.set('view engine', 'ejs');
 
+var routes = require('./routes');
+
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+
 //Routes
 
-//Home Route
-app.get('/', function(req, res) {
-	res.render('home', {
-		title : "Star Wars Movies"
-	});
-});
+//home
+app.get('/', routes.home);
 
-//Single Movie
-app.get('/star_wars_episode/:episode_num?', function(req, res) {
-	var episodeNum = req.params.episode_num;
-	res.send("This is the page for episode " + episodeNum);
-});
+app.get('/star_wars_episode/:episode_number?', routes.movie_single);
 
-//Invalid Route
-app.get('*', function(req, res) {
-	res.send("This page does not exist");
-});
+app.get('*', routes.notFound);
 
 app.listen(3000, function() {
 	console.log("Server is running!!");
