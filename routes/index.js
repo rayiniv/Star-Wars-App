@@ -12,12 +12,43 @@ exports.home = function(req, res) {
 };
 
 //Single Movie
+// Movie-single route
 exports.movie_single = function(req, res) {
-	var episodeNum = req.params.episode_number;
-	res.send("This is the page for episode " + episodeNum);
+	var episode_number = req.params.episode_number;
+
+	var movies = moviesJSON.movies;
+
+	// Only render the movie_single template for episodes that exist
+	if (episode_number >= 1 && episode_number <= 6) {
+
+		var movie = movies[episode_number - 1];
+
+		var title = movie.title;
+
+		var main_characters = movie.main_characters;
+		
+		res.render('movie_single', {
+			movies : movies,
+			movie : movie,
+			title : title,
+			main_characters : main_characters
+		});
+
+	} else {
+		res.render('notFound', {
+			movies : movies,
+			title : "This page doesn't exist"
+		});
+	}
+
 };
 
 //Invalid Route
 exports.notFound = function(req, res) {
-	res.send("This page does not exist");
+	var movies = moviesJSON.movies;
+
+	res.render('notFound', {
+		movies : movies,
+		title : "This page doesn't exist"
+	});
 };
