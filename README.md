@@ -1,6 +1,4 @@
-Star  Wars App
-
-Star Wars app for movie fans
+Star Wars App for movie fans
 
 Created with Node.JS and Express.JS
 
